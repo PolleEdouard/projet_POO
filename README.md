@@ -11,26 +11,29 @@ projet_POO/
 ├── bin/             # Exécutables et fichiers objets
 ├── data/            # Données CSV (générées automatiquement)
 ├── docs/            # Documentation
-├── README.md   
-├── Makefile         
-└── .gitignore       
+├── README.md
+├── Makefile
+└── .gitignore
 ```
 
 ## Architecture
 
 ### Hiérarchie Enseignant
+
 - **Enseignant** (classe abstraite)
   - **Professeur** (192h/an)
   - **MaitreConference** (192h/an)
   - **Autre** (384h/an)
 
 ### Classes métier
+
 - **UE** - Unité d'enseignement avec CM/TD/TP
 - **Departement** - Gère enseignants et UE
 - **Intervention** - Association enseignant-UE
 - **Semestre**, **Diplome**, **Inscription**
 
 ### Persistance
+
 - **GestionFichiers** - Sauvegarde/chargement CSV
 
 ## Compilation
@@ -57,6 +60,7 @@ L'application charge automatiquement les données depuis `data/` au démarrage.
 ## Utilisation
 
 L'interface propose :
+
 1. Saisir enseignants, UE, départements
 2. Enregistrer interventions
 3. Afficher charges et taux d'encadrement
@@ -69,4 +73,6 @@ L'interface propose :
 
 ## Auteur
 
-Projet POO 2024-2025
+Abdellou--Genestier Renaud
+Lafarge Baptiste
+Dussot--Clary Ambre
