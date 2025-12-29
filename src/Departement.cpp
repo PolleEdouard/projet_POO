@@ -5,7 +5,7 @@
 // Constructeur
 Departement::Departement(const std::string &nom) : nom(nom) {}
 
-// Destructeur (ne supprime PAS les enseignants ni les UE)
+// Destructeur 
 Departement::~Departement() {}
 
 // Getters

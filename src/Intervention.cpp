@@ -6,7 +6,7 @@ Intervention::Intervention(Enseignant *enseignant, UE *ue, double heuresCM,
     : enseignant(enseignant), ue(ue), heuresCM(heuresCM), heuresTD(heuresTD),
       heuresTP(heuresTP) {}
 
-// Destructeur (ne supprime PAS les objets pointés car pas de propriété)
+// Destructeur 
 Intervention::~Intervention() {}
 
 // Getters

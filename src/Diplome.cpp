@@ -4,7 +4,7 @@
 // Constructeur
 Diplome::Diplome(const std::string &nom) : nom(nom) {}
 
-// Destructeur (ne supprime PAS les semestres)
+// Destructeur 
 Diplome::~Diplome() {}
 
 // Getters

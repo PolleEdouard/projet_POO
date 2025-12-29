@@ -4,7 +4,7 @@
 Inscription::Inscription(UE *ue, Semestre *semestre, int nbEtudiants)
     : ue(ue), semestre(semestre), nbEtudiants(nbEtudiants) {}
 
-// Destructeur (ne supprime PAS les objets pointés car pas de propriété)
+// Destructeur
 Inscription::~Inscription() {}
 
 // Getters
