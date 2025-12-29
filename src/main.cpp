@@ -33,7 +33,6 @@ void clearScreen() {
 
 void pause() {
   cout << "\nAppuyez sur Entrée pour continuer...";
-  cin.ignore(numeric_limits<streamsize>::max(), '\n');
   cin.get();
 }
 
@@ -101,6 +100,7 @@ void afficherMenu() {
   cout << "║  PERSISTANCE                                   ║" << endl;
   cout << "║  8. Sauvegarder les données                   ║" << endl;
   cout << "║  9. Charger les données                       ║" << endl;
+  cout << "║  T. Générer/Effacer données de test           ║" << endl;
   cout << "║                                                ║" << endl;
   cout << "║  0. Quitter                                    ║" << endl;
   cout << "╚════════════════════════════════════════════════╝" << endl;
@@ -477,7 +477,8 @@ void sauvegarder() {
 void charger() {
   clearScreen();
   cout << "=== CHARGEMENT ===" << endl << endl;
-  cout << "ATTENTION Attention: les données actuelles seront remplacées!" << endl;
+  cout << "ATTENTION Attention: les données actuelles seront remplacées!"
+       << endl;
   cout << "Continuer? (o/n): ";
 
   char reponse;
@@ -523,9 +524,90 @@ void charger() {
   pause();
 }
 
+// T. Données de test
+void genererDonneesTest() {
+  clearScreen();
+  cout << "=== DONNÉES DE TEST ===" << endl << endl;
+  cout << "1. Générer données de test" << endl;
+  cout << "2. Effacer toutes les données" << endl;
+  cout << "0. Retour" << endl;
+
+  int choix = lireEntier("\nChoix: ", 0, 2);
+
+  if (choix == 1) {
+    // Nettoyer d'abord
+    for (auto ens : enseignants)
+      delete ens;
+    for (auto ue : ues)
+      delete ue;
+    for (auto dept : departements)
+      delete dept;
+    for (auto interv : interventions)
+      delete interv;
+    enseignants.clear();
+    ues.clear();
+    departements.clear();
+    interventions.clear();
+
+    // Créer enseignants
+    enseignants.push_back(
+        new Professeur("Martin", "Sophie", "10 Rue Pasteur", 1001));
+    enseignants.push_back(
+        new Professeur("Durand", "Pierre", "20 Avenue", 1002));
+    enseignants.push_back(
+        new MaitreConference("Dubois", "Luc", "30 Boulevard", 1003));
+    enseignants.push_back(new Autre("Leroy", "Marie", "40 Place", 1004));
+
+    // Créer UE
+    ues.push_back(new UE("Programmation Orientée Objet", 20, 1, 30, 2, 20, 3,
+                         enseignants[0]));
+    ues.push_back(
+        new UE("Structures de Données", 15, 1, 25, 2, 15, 2, enseignants[2]));
+    ues.push_back(
+        new UE("Algorithmique Avancée", 18, 1, 20, 2, 12, 2, enseignants[1]));
+
+    // Créer département
+    Departement *dept = new Departement("Informatique");
+    for (auto ens : enseignants)
+      dept->ajouterEnseignant(ens);
+    for (auto ue : ues)
+      dept->ajouterUE(ue);
+    departements.push_back(dept);
+
+    // Créer interventions
+    interventions.push_back(
+        new Intervention(enseignants[0], ues[0], 20, 15, 10));
+    interventions.push_back(
+        new Intervention(enseignants[2], ues[1], 15, 12, 8));
+
+    cout << "\nOK Données de test générées:" << endl;
+    cout << "  " << enseignants.size() << " enseignants" << endl;
+    cout << "  " << ues.size() << " UE" << endl;
+    cout << "  " << departements.size() << " département" << endl;
+    cout << "  " << interventions.size() << " interventions" << endl;
+
+  } else if (choix == 2) {
+    for (auto ens : enseignants)
+      delete ens;
+    for (auto ue : ues)
+      delete ue;
+    for (auto dept : departements)
+      delete dept;
+    for (auto interv : interventions)
+      delete interv;
+    enseignants.clear();
+    ues.clear();
+    departements.clear();
+    interventions.clear();
+
+    cout << "\nOK Toutes les données ont été effacées" << endl;
+  }
+
+  pause();
+}
+
 // Main
 int main() {
-  int choix;
   bool quitter = false;
 
   cout << "Bienvenue dans le Système de Gestion Universitaire!" << endl;
@@ -535,21 +617,68 @@ int main() {
   map<int, Enseignant *> mapIdToEns;
   map<int, UE *> mapIdToUE;
 
+  // Vérifier et charger enseignants
   enseignants =
       GestionFichiers::chargerEnseignants("data/enseignants.csv", mapIdToEns);
+  if (enseignants.empty()) {
+    cout << "  CSV enseignants.csv manquant, création..." << endl;
+    GestionFichiers::sauvegarderEnseignants(enseignants,
+                                            "data/enseignants.csv");
+  }
+
+  // Vérifier et charger UE
   ues = GestionFichiers::chargerUEs("data/ues.csv", mapIdToEns, mapIdToUE);
+  if (ues.empty()) {
+    cout << "  CSV ues.csv manquant, création..." << endl;
+    GestionFichiers::sauvegarderUEs(ues, "data/ues.csv");
+  }
+
+  // Vérifier et charger départements
   departements = GestionFichiers::chargerDepartements("data/departements.csv",
                                                       mapIdToEns, mapIdToUE);
+  if (departements.empty()) {
+    cout << "  CSV departements.csv manquant, création..." << endl;
+    map<Enseignant *, int> mapEnsToId;
+    map<UE *, int> mapUEToId;
+    GestionFichiers::sauvegarderDepartements(
+        departements, "data/departements.csv", mapEnsToId, mapUEToId);
+  }
 
   if (!enseignants.empty() || !ues.empty() || !departements.empty()) {
     cout << "OK Données chargées depuis data/" << endl;
+  } else {
+    cout << "Démarrage avec base de données vide." << endl;
   }
 
   pause();
 
   while (!quitter) {
     afficherMenu();
-    choix = lireEntier("Choix: ", 0, 9);
+
+    cout << "Choix: ";
+    string choixStr;
+    getline(cin, choixStr);
+
+    if (choixStr.empty())
+      continue;
+
+    char premierChar = choixStr[0];
+
+    // Gérer option T
+    if (premierChar == 'T' || premierChar == 't') {
+      genererDonneesTest();
+      continue;
+    }
+
+    // Convertir en entier pour les autres options
+    int choix = 0;
+    try {
+      choix = stoi(choixStr);
+    } catch (...) {
+      cout << "Option invalide!" << endl;
+      pause();
+      continue;
+    }
 
     switch (choix) {
     case 1:
@@ -583,11 +712,15 @@ int main() {
       cout << "\nSauvegarder avant de quitter? (o/n): ";
       char rep;
       cin >> rep;
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
       if (rep == 'o' || rep == 'O') {
         sauvegarder();
       }
       quitter = true;
       break;
+    default:
+      cout << "Option invalide!" << endl;
+      pause();
     }
   }
 
