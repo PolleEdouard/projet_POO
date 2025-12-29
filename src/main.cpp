@@ -84,23 +84,23 @@ string lireString(const string &message) {
 void afficherMenu() {
   clearScreen();
   cout << "╔════════════════════════════════════════════════╗" << endl;
-  cout << "║     SYSTÈME DE GESTION UNIVERSITAIRE          ║" << endl;
+  cout << "║     SYSTÈME DE GESTION UNIVERSITAIRE           ║" << endl;
   cout << "╠════════════════════════════════════════════════╣" << endl;
   cout << "║  SAISIE                                        ║" << endl;
-  cout << "║  1. Saisir un enseignant                      ║" << endl;
-  cout << "║  2. Saisir une UE                             ║" << endl;
-  cout << "║  3. Saisir un département                     ║" << endl;
-  cout << "║  4. Saisir une intervention                   ║" << endl;
+  cout << "║  1. Saisir un enseignant                       ║" << endl;
+  cout << "║  2. Saisir une UE                              ║" << endl;
+  cout << "║  3. Saisir un département                      ║" << endl;
+  cout << "║  4. Saisir une intervention                    ║" << endl;
   cout << "║                                                ║" << endl;
   cout << "║  AFFICHAGE                                     ║" << endl;
-  cout << "║  5. Afficher charges d'un enseignant          ║" << endl;
-  cout << "║  6. Afficher taux encadrement (département)   ║" << endl;
-  cout << "║  7. Lister tous les objets                    ║" << endl;
+  cout << "║  5. Afficher charges d'un enseignant           ║" << endl;
+  cout << "║  6. Afficher taux encadrement (département)    ║" << endl;
+  cout << "║  7. Lister tous les objets                     ║" << endl;
   cout << "║                                                ║" << endl;
   cout << "║  PERSISTANCE                                   ║" << endl;
-  cout << "║  8. Sauvegarder les données                   ║" << endl;
-  cout << "║  9. Charger les données                       ║" << endl;
-  cout << "║  T. Générer/Effacer données de test           ║" << endl;
+  cout << "║  8. Sauvegarder les données                    ║" << endl;
+  cout << "║  9. Charger les données                        ║" << endl;
+  cout << "║  T. Générer/Effacer données de test            ║" << endl;
   cout << "║                                                ║" << endl;
   cout << "║  0. Quitter                                    ║" << endl;
   cout << "╚════════════════════════════════════════════════╝" << endl;
@@ -251,7 +251,7 @@ void saisirIntervention() {
   cout << "=== SAISIR UNE INTERVENTION ===" << endl << endl;
 
   if (enseignants.empty() || ues.empty()) {
-    cout << "❌ Il faut d'abord créer des enseignants et des UE!" << endl;
+    cout << "Il faut d'abord créer des enseignants et des UE!" << endl;
     pause();
     return;
   }
@@ -293,7 +293,7 @@ void afficherChargesEnseignant() {
   cout << "=== CHARGES D'UN ENSEIGNANT ===" << endl << endl;
 
   if (enseignants.empty()) {
-    cout << "❌ Aucun enseignant enregistré!" << endl;
+    cout << "Aucun enseignant enregistré!" << endl;
     pause();
     return;
   }
@@ -353,7 +353,7 @@ void afficherTauxEncadrement() {
   cout << "=== TAUX D'ENCADREMENT ===" << endl << endl;
 
   if (departements.empty()) {
-    cout << "❌ Aucun département enregistré!" << endl;
+    cout << "Aucun département enregistré!" << endl;
     pause();
     return;
   }
@@ -467,7 +467,7 @@ void sauvegarder() {
   if (ok1 && ok2 && ok3) {
     cout << "\nOK Toutes les données ont été sauvegardées dans data/" << endl;
   } else {
-    cout << "\n❌ Erreur lors de la sauvegarde" << endl;
+    cout << "\nErreur lors de la sauvegarde" << endl;
   }
 
   pause();
