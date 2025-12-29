@@ -1,41 +1,23 @@
-# Prerequisites
-*.d
-
-# Compiled Object files
-*.slo
-*.lo
+.$UML.drawio.bkp
 *.o
-*.obj
 
-# Precompiled Headers
-*.gch
-*.pch
+# Binaires
+bin/
+test_enseignant
+test_ue
 
-# Linker files
-*.ilk
+# Fichiers temporaires
+*.swp
+*.swo
+*~
 
-# Debugger Files
-*.pdb
+# IDE
+.vscode/*
+!.vscode/c_cpp_properties.json
+!.vscode/settings.json
+!.vscode/README.md
+.idea/
+*.code-workspace
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# debug information files
-*.dwo
+# Données (fichiers générés)
+data/
