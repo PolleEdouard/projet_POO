@@ -1,0 +1,4 @@
+CompileFlags:
+  Add:
+    - "-I/home/rens/Work/Licence/POO/projet_POO/include"
+    - "-std=c++17"
