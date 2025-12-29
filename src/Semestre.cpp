@@ -1,6 +1,7 @@
 #include "Semestre.hpp"
 #include "Inscription.hpp"
 #include <algorithm>
+#include <numeric>
 
 // Constructeur
 Semestre::Semestre(int numero, const std::string &annee)
@@ -39,4 +40,20 @@ void Semestre::retirerInscription(Inscription *inscription) {
   if (it != inscriptions.end()) {
     inscriptions.erase(it);
   }
+}
+
+// Calcul du coût total du semestre
+double Semestre::calculerCout() const {
+  return std::accumulate(inscriptions.begin(), inscriptions.end(), 0.0,
+                         [](double total, const Inscription *inscr) {
+                           if (inscr && inscr->getUE()) {
+                             // Coût ETD de l'UE × nombre d'inscrits dans ce
+                             // semestre
+                             double coutUE =
+                                 inscr->getUE()->calculerCoutTotalETD();
+                             int nbInscrits = inscr->getNbEtudiants();
+                             return total + (coutUE * nbInscrits);
+                           }
+                           return total;
+                         });
 }

@@ -44,6 +44,14 @@ public:
   // Gestion des inscriptions
   void ajouterInscription(Inscription *inscription);
   void retirerInscription(Inscription *inscription);
+
+  /**
+   * @brief Calcule le coût total du semestre
+   * @return Somme des coûts ETD des UE au prorata des inscrits
+   *
+   * Pour chaque UE inscrite, calcule: coût_ETD_UE × nb_inscrits_semestre
+   */
+  double calculerCout() const;
 };
 
 #endif

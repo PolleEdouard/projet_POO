@@ -1,5 +1,6 @@
 #include "Departement.hpp"
 #include <algorithm>
+#include <numeric>
 
 // Constructeur
 Departement::Departement(const std::string &nom) : nom(nom) {}
@@ -51,4 +52,27 @@ void Departement::retirerUE(UE *ue) {
   if (it != ues.end()) {
     ues.erase(it);
   }
+}
+
+// Calcul du taux d'encadrement
+double Departement::calculerTauxEncadrement() const {
+  // Somme des heures dues par les enseignants
+  double totalHeuresDues =
+      std::accumulate(enseignants.begin(), enseignants.end(), 0.0,
+                      [](double total, const Enseignant *ens) {
+                        return total + (ens ? ens->getNbHeuresDues() : 0.0);
+                      });
+
+  // Somme des coûts ETD des UE
+  double totalCoutsETD = std::accumulate(
+      ues.begin(), ues.end(), 0.0, [](double total, const UE *ue) {
+        return total + (ue ? ue->calculerCoutTotalETD() : 0.0);
+      });
+
+  // Éviter division par zéro
+  if (totalCoutsETD == 0.0) {
+    return 0.0;
+  }
+
+  return totalHeuresDues / totalCoutsETD;
 }

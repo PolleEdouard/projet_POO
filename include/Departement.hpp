@@ -46,6 +46,14 @@ public:
   // Gestion des UE
   void ajouterUE(UE *ue);
   void retirerUE(UE *ue);
+
+  /**
+   * @brief Calcule le taux d'encadrement du département
+   * @return Rapport entre heures dues des enseignants et coûts ETD des UE
+   *
+   * Formule: (somme heures dues enseignants) / (somme coûts ETD UE)
+   */
+  double calculerTauxEncadrement() const;
 };
 
 #endif
